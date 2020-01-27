@@ -5,6 +5,7 @@
 promise = axios.get('https://api.github.com/users/5f1839842f2fb')
   .then (response => {
     cardMaker(response)
+    console.log(response);
   })
   .catch (error => {
     console.log('Something failed getting my profile')
@@ -30,7 +31,7 @@ promise = axios.get('https://api.github.com/users/5f1839842f2fb')
           user, and adding that card to the DOM.
 */
 
-const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell', 'bmwang'];
 
 followersArray.forEach(element => {
   promise = axios.get('https://api.github.com/users/'+element)
@@ -61,7 +62,6 @@ followersArray.forEach(element => {
 
 */
 cardMaker = (response) => {
-  console.log(response);
   let parent = document.querySelector('.cards');
   let cardDiv = document.createElement('div');
   cardDiv.classList.add('card');
