@@ -2,10 +2,9 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-let responseObj;
 promise = axios.get('https://api.github.com/users/5f1839842f2fb')
   .then (response => {
-    responseObj = response;
+    cardMaker(response)
   })
   .catch (error => {
 
@@ -53,76 +52,46 @@ const followersArray = [];
 
 */
 cardMaker = (response) => {
-  const elementList = [
-    { //0
-      tag: 'div',
-      attributes: {class: 'card'}
-    }, 
-    { //1
-      tag: 'img',
-      attributes: {src: response.data.avatar_url},
-      parent: elementList[0]
-    }, 
-    { //2
-      tag: 'div',
-      attributes: {class: 'card-info'},
-      parent: elementList[0]
-    }, 
-    { //3
-      tag: 'h3',
-      attributes: {class: 'name'},
-      textContent: response.data.login,
-      parent: elementList[2]
-    },
-    { //4
-      tag: 'p',
-      textContent: 'Location: '+response.data.location,
-      parent: elementList[2]
-    }, 
-    { //5
-      tag: 'p',
-      textContent: 'Profile: ',
-      parent: elementList[2]
-    }, 
-    { //6
-      tag: 'a',
-      attributes: {href: response.data.html_url},
-      textContent: response.data.html_url,
-      parent: elementList[5]
-    }, 
-    { //7
-      tag: 'p',
-      textContent: 'Followers: '+response.data.followers,
-      parent: elementList[2]
-    }, 
-    { //8
-      tag: 'p',
-      textContent: 'Following: '+response.data.following,
-      parent: elementList[2]
-    },
-    { //9
-      tag: 'p',
-      textContent: 'Bio: '+response.data.bio,
-      parent: elementList[2]
-    },]
-  elementList.forEach((element, index) => {
-    let node = elementList[index];
-    node = document.createElement(node.tag)
-  })
-  console.log(elementList)
-  /* elementList[0].appendChild(elementList[1])
-  elementList[0].appendChild(elementList[2])
-  elementList[2].appendChild(elementList[3])
-  elementList[2].appendChild(elementList[4])
-  elementList[2].appendChild(elementList[5])
-  elementList[2].appendChild(elementList[6])
-  elementList[2].appendChild(elementList[7])
-  elementList[2].appendChild(elementList[8])
-  elementList[2].appendChild(elementList[9]) */
-  return elementList
+  console.log(response);
+  let parent = document.querySelector('.cards');
+  let cardDiv = document.createElement('div');
+  cardDiv.classList.add('card');
+  let pfpImg = document.createElement('img');
+  pfpImg.setAttribute('src', response.data.avatar_url);
+  let cardinfoDiv = document.createElement('div');
+  cardinfoDiv.classList.add('card-info');
+  let nameH3 = document.createElement('h3');
+  nameH3.classList.add('name');
+  nameH3.textContent = response.data.name;
+  let usernameP = document.createElement('p');
+  usernameP.classList.add('username');
+  usernameP.textContent = response.data.login;
+  let locationP =  document.createElement('p');
+  locationP.textContent = 'Location: '+response.data.location;
+  let profileP = document.createElement('p');
+  profileP.textContent = 'Profile: ';
+  let pageA = document.createElement('a');
+  pageA.setAttribute('href', response.data.html_url);
+  pageA.textContent = response.data.html_url;
+  let followersP = document.createElement('p');
+  followersP.textContent = 'Followers: ' + response.data.followers;
+  let followingP = document.createElement('p');
+  followingP.textContent = 'Following: ' + response.data.following;
+  let bioP = document.createElement('p');
+  bioP.textContent = 'Bio: ' + response.data.bio;
+  
+  parent.appendChild(cardDiv)
+  cardDiv.appendChild(pfpImg)
+  cardDiv.appendChild(cardinfoDiv)
+  cardinfoDiv.appendChild(nameH3)
+  cardinfoDiv.appendChild(usernameP)
+  cardinfoDiv.appendChild(locationP)
+  cardinfoDiv.appendChild(profileP)
+  profileP.appendChild(pageA)
+  cardinfoDiv.appendChild(followersP)
+  cardinfoDiv.appendChild(followingP)
+  cardinfoDiv.appendChild(bioP)
 }
-elementList = cardMaker(responseObj)
-const cardsDiv = document.querySelector('.cards').appendChild(elementList[0])
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
